@@ -90,6 +90,7 @@ const App: React.FC = () => {
         },
       ],
       selectedValue: undefined,
+      disabled: false,
     },
     {
       id: 2,
@@ -97,6 +98,7 @@ const App: React.FC = () => {
       field: 'table',
       options: [],
       selectedValue: undefined,
+      disabled: true,
     },
     {
       id: 3,
@@ -104,6 +106,21 @@ const App: React.FC = () => {
       field: 'codeValue',
       options: [],
       selectedValue: undefined,
+      disabled: true,
+    },
+    {
+      id: 4,
+      label: '字段1',
+      field: 'field1',
+      options: [],
+      disabled: true,
+    },
+    {
+      id: 5,
+      label: '字段2',
+      field: 'field2',
+      options: [],
+      disabled: true,
     },
   ]);
   const onChange = (itemValue: any, index: any) => {
@@ -123,6 +140,7 @@ const App: React.FC = () => {
         field: nextField,
         options: list || [],
         selectedValue: undefined,
+        disabled: itemValue ? false : true,
       };
       const currIndex = Object.keys(map).findIndex((v) => v === nextField);
       const arr: any[] = Object.keys(map)
@@ -133,6 +151,7 @@ const App: React.FC = () => {
           field: map[v].field,
           options: [],
           selectedValue: undefined,
+          disabled: true,
         }));
       console.log(arr, 'arr');
       const value = [...config];
@@ -156,7 +175,11 @@ const App: React.FC = () => {
     >
       {config.map((field, index) => (
         <Form.Item key={field.id} label={field.label}>
-          <Select onChange={(val: any) => onChange(val, index)}>
+          <Select
+            onChange={(val: any) => onChange(val, index)}
+            disabled={field.disabled}
+            allowClear
+          >
             {field.options.map((option: any) => (
               <Select.Option key={option.id} value={option.name}>
                 {option.name}
